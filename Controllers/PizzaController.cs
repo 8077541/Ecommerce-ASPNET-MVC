@@ -12,26 +12,27 @@ namespace ecom.Controllers
     [Route("api/[controller]")]
     public class PizzaController : ControllerBase
     {
-        private static List<Pizza> pizzas = new List<Pizza>{
-            new Pizza(),
-            new Pizza{Id = 1 , Name = "Cappriciosa"}
-        };
+        private readonly IPizzaService _pizzaService;
+        public PizzaController(IPizzaService pizzaService)
+        {
+            _pizzaService = pizzaService;
+        }
+
         [HttpGet("GetAll")]
         public ActionResult<List<Pizza>> Get()
         {
-            return Ok(pizzas);
+            return Ok(_pizzaService.GetAllPizzas());
         }
 
         [HttpGet("{id}")]
         public ActionResult<List<Pizza>> GetSingle(int id)
         {
-            return Ok(pizzas.FirstOrDefault(p => p.Id == id));
+            return Ok(_pizzaService.GetPizzaById(id));
         }
         [HttpPost]
         public ActionResult<List<Pizza>> AddPizza(Pizza newPizza)
         {
-            pizzas.Add(newPizza);
-            return Ok(pizzas);
+            return Ok(_pizzaService.AddPizza(newPizza));
 
         }
     }
