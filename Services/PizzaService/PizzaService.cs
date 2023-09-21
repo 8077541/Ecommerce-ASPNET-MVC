@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 namespace ecom.Services.PizzaService
 {
     public class PizzaService : IPizzaService
@@ -11,24 +12,31 @@ namespace ecom.Services.PizzaService
             new Pizza(),
             new Pizza{Id = 1 , Name = "Cappriciosa"}
         };
-        public async Task<ServiceResponse<List<Pizza>>> GetAllPizzas()
+
+
+        private readonly IMapper _mapper;
+        public PizzaService(IMapper mapper)
         {
-            var serviceResponse = new ServiceResponse<List<Pizza>>();
-            serviceResponse.Data = pizzas;
+            _mapper = mapper;
+        }
+        public async Task<ServiceResponse<List<GetPizzaResponseDto>>> GetAllPizzas()
+        {
+            var serviceResponse = new ServiceResponse<List<GetPizzaResponseDto>>();
+            serviceResponse.Data = pizzas.Select(p => _mapper.Map<GetPizzaResponseDto>(p)).ToList();
             return serviceResponse;
         }
-        public async Task<ServiceResponse<Pizza>> GetPizzaById(int id)
+        public async Task<ServiceResponse<GetPizzaResponseDto>> GetPizzaById(int id)
         {
-            var serviceResponse = new ServiceResponse<Pizza>();
+            var serviceResponse = new ServiceResponse<GetPizzaResponseDto>();
             var pizza = pizzas.FirstOrDefault(p => p.Id == id) ?? throw new Exception("Pizza not found!");
-            serviceResponse.Data = pizza;
+            serviceResponse.Data = _mapper.Map<GetPizzaResponseDto>(pizza);
             return serviceResponse;
         }
-        public async Task<ServiceResponse<List<Pizza>>> AddPizza(Pizza newPizza)
+        public async Task<ServiceResponse<List<GetPizzaResponseDto>>> AddPizza(AddPizzaRequestDto newPizza)
         {
-            var serviceResponse = new ServiceResponse<List<Pizza>>();
-            pizzas.Add(newPizza);
-            serviceResponse.Data = pizzas;
+            var serviceResponse = new ServiceResponse<List<GetPizzaResponseDto>>();
+            pizzas.Add(_mapper.Map<Pizza>(newPizza));
+            serviceResponse.Data = pizzas.Select(p => _mapper.Map<GetPizzaResponseDto>(p)).ToList();
             return serviceResponse;
 
         }

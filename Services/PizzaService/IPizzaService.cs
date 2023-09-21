@@ -2,14 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ecom.Dtos.Pizza;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ecom.Services.PizzaService
 {
     public interface IPizzaService
     {
-        Task<ServiceResponse<List<Pizza>>> GetAllPizzas();
-        Task<ServiceResponse<Pizza>> GetPizzaById(int id);
-        Task<ServiceResponse<List<Pizza>>> AddPizza(Pizza newPizza);
+        Task<ServiceResponse<List<GetPizzaResponseDto>>> GetAllPizzas();
+        Task<ServiceResponse<GetPizzaResponseDto>> GetPizzaById(int id);
+        Task<ServiceResponse<List<GetPizzaResponseDto>>> AddPizza(AddPizzaRequestDto newPizza);
     }
 }
