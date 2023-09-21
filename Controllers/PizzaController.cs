@@ -19,20 +19,20 @@ namespace ecom.Controllers
         }
 
         [HttpGet("GetAll")]
-        public ActionResult<List<Pizza>> Get()
+        public async Task<ActionResult<ServiceResponse<List<Pizza>>>> Get()
         {
-            return Ok(_pizzaService.GetAllPizzas());
+            return Ok(await _pizzaService.GetAllPizzas());
         }
 
         [HttpGet("{id}")]
-        public ActionResult<List<Pizza>> GetSingle(int id)
+        public async Task<ActionResult<ServiceResponse<Pizza>>> GetSingle(int id)
         {
-            return Ok(_pizzaService.GetPizzaById(id));
+            return Ok(await _pizzaService.GetPizzaById(id));
         }
         [HttpPost]
-        public ActionResult<List<Pizza>> AddPizza(Pizza newPizza)
+        public async Task<ActionResult<ServiceResponse<List<Pizza>>>> AddPizza(Pizza newPizza)
         {
-            return Ok(_pizzaService.AddPizza(newPizza));
+            return Ok(await _pizzaService.AddPizza(newPizza));
 
         }
     }

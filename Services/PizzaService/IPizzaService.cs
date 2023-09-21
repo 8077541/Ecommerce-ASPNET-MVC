@@ -8,8 +8,8 @@ namespace ecom.Services.PizzaService
 {
     public interface IPizzaService
     {
-        List<Pizza> GetAllPizzas();
-        Pizza GetPizzaById(int id);
-        List<Pizza> AddPizza(Pizza newPizza);
+        Task<ServiceResponse<List<Pizza>>> GetAllPizzas();
+        Task<ServiceResponse<Pizza>> GetPizzaById(int id);
+        Task<ServiceResponse<List<Pizza>>> AddPizza(Pizza newPizza);
     }
 }

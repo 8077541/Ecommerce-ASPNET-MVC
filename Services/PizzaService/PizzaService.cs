@@ -11,18 +11,25 @@ namespace ecom.Services.PizzaService
             new Pizza(),
             new Pizza{Id = 1 , Name = "Cappriciosa"}
         };
-        public List<Pizza> GetAllPizzas()
+        public async Task<ServiceResponse<List<Pizza>>> GetAllPizzas()
         {
-            return pizzas;
+            var serviceResponse = new ServiceResponse<List<Pizza>>();
+            serviceResponse.Data = pizzas;
+            return serviceResponse;
         }
-        public Pizza GetPizzaById(int id)
+        public async Task<ServiceResponse<Pizza>> GetPizzaById(int id)
         {
-            return pizzas.FirstOrDefault(p => p.Id == id);
+            var serviceResponse = new ServiceResponse<Pizza>();
+            var pizza = pizzas.FirstOrDefault(p => p.Id == id) ?? throw new Exception("Pizza not found!");
+            serviceResponse.Data = pizza;
+            return serviceResponse;
         }
-        public List<Pizza> AddPizza(Pizza newPizza)
+        public async Task<ServiceResponse<List<Pizza>>> AddPizza(Pizza newPizza)
         {
+            var serviceResponse = new ServiceResponse<List<Pizza>>();
             pizzas.Add(newPizza);
-            return pizzas;
+            serviceResponse.Data = pizzas;
+            return serviceResponse;
 
         }
     }
