@@ -35,5 +35,16 @@ namespace ecom.Controllers
             return Ok(await _pizzaService.AddPizza(newPizza));
 
         }
+        [HttpPut]
+        public async Task<ActionResult<ServiceResponse<List<GetPizzaResponseDto>>>> UpdatePizza(UpdatePizzaRequestDto updatedPizza)
+        {
+            var response = await _pizzaService.UpdatePizza(updatedPizza);
+            if (response.Data is null)
+            {
+                return NotFound(response);
+            }
+            return Ok(response);
+
+        }
     }
 }

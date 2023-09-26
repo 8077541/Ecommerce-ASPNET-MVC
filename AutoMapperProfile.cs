@@ -11,6 +11,7 @@ namespace ecom
         public AutoMapperProfile()
         {
             CreateMap<Pizza, GetPizzaResponseDto>();
+            CreateMap<AddPizzaRequestDto, Pizza>();
         }
     }
 }

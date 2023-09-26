@@ -35,10 +35,37 @@ namespace ecom.Services.PizzaService
         public async Task<ServiceResponse<List<GetPizzaResponseDto>>> AddPizza(AddPizzaRequestDto newPizza)
         {
             var serviceResponse = new ServiceResponse<List<GetPizzaResponseDto>>();
-            pizzas.Add(_mapper.Map<Pizza>(newPizza));
+            var pizza = _mapper.Map<Pizza>(newPizza);
+            pizza.Id = pizzas.Max(p => p.Id) + 1;
+            pizzas.Add(pizza);
             serviceResponse.Data = pizzas.Select(p => _mapper.Map<GetPizzaResponseDto>(p)).ToList();
             return serviceResponse;
 
+        }
+
+        public async Task<ServiceResponse<GetPizzaResponseDto>> UpdatePizza(UpdatePizzaRequestDto updatedPizza)
+        {
+            var serviceResponse = new ServiceResponse<GetPizzaResponseDto>();
+            try
+            {
+
+                var pizza = pizzas.FirstOrDefault(p => p.Id == updatedPizza.Id) ?? throw new Exception("Pizza not found!");
+
+                pizza.Name = updatedPizza.Name;
+                pizza.BasePrice = updatedPizza.BasePrice;
+                pizza.Descirption = updatedPizza.Descirption;
+                pizza.Ingredients = updatedPizza.Ingredients;
+                pizza.Size = updatedPizza.Size;
+
+                serviceResponse.Data = _mapper.Map<GetPizzaResponseDto>(pizza);
+            }
+            catch (Exception e)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = e.Message;
+
+            }
+            return serviceResponse;
         }
     }
 }
