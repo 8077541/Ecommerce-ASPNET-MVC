@@ -67,5 +67,26 @@ namespace ecom.Services.PizzaService
             }
             return serviceResponse;
         }
+
+        public async Task<ServiceResponse<List<GetPizzaResponseDto>>> DeletePizza(int id)
+        {
+            var serviceResponse = new ServiceResponse<List<GetPizzaResponseDto>>();
+            try
+            {
+
+                var pizza = pizzas.FirstOrDefault(p => p.Id == id) ?? throw new Exception("Pizza not found!");
+
+                pizzas.Remove(pizza);
+
+                serviceResponse.Data = pizzas.Select(c => _mapper.Map<GetPizzaResponseDto>(c)).ToList();
+            }
+            catch (Exception e)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = e.Message;
+
+            }
+            return serviceResponse;
+        }
     }
 }

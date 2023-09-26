@@ -46,5 +46,16 @@ namespace ecom.Controllers
             return Ok(response);
 
         }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<ServiceResponse<GetPizzaResponseDto>>> DeletePizza(int id)
+        {
+            var response = await _pizzaService.DeletePizza(id);
+            if (response.Data is null)
+            {
+                return NotFound(response);
+            }
+            return Ok(response);
+        }
+
     }
 }

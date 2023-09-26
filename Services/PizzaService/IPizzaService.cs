@@ -13,5 +13,7 @@ namespace ecom.Services.PizzaService
         Task<ServiceResponse<GetPizzaResponseDto>> GetPizzaById(int id);
         Task<ServiceResponse<List<GetPizzaResponseDto>>> AddPizza(AddPizzaRequestDto newPizza);
         Task<ServiceResponse<GetPizzaResponseDto>> UpdatePizza(UpdatePizzaRequestDto updatedPizza);
+        Task<ServiceResponse<List<GetPizzaResponseDto>>> DeletePizza(int id);
+
     }
 }
