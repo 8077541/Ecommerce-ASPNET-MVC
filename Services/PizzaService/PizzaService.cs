@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
+using ecom.Data;
 namespace ecom.Services.PizzaService
 {
     public class PizzaService : IPizzaService
@@ -15,21 +16,25 @@ namespace ecom.Services.PizzaService
 
 
         private readonly IMapper _mapper;
-        public PizzaService(IMapper mapper)
+        private readonly DataContext _context;
+        public PizzaService(IMapper mapper, DataContext context)
+
         {
+            _context = context;
             _mapper = mapper;
         }
         public async Task<ServiceResponse<List<GetPizzaResponseDto>>> GetAllPizzas()
         {
             var serviceResponse = new ServiceResponse<List<GetPizzaResponseDto>>();
-            serviceResponse.Data = pizzas.Select(p => _mapper.Map<GetPizzaResponseDto>(p)).ToList();
+            var dbPizzas = await _context.Pizzas.ToListAsync();
+            serviceResponse.Data = dbPizzas.Select(p => _mapper.Map<GetPizzaResponseDto>(p)).ToList();
             return serviceResponse;
         }
         public async Task<ServiceResponse<GetPizzaResponseDto>> GetPizzaById(int id)
         {
             var serviceResponse = new ServiceResponse<GetPizzaResponseDto>();
-            var pizza = pizzas.FirstOrDefault(p => p.Id == id) ?? throw new Exception("Pizza not found!");
-            serviceResponse.Data = _mapper.Map<GetPizzaResponseDto>(pizza);
+            var dbPizza = await _context.Pizzas.FirstOrDefaultAsync(p => p.Id == id);
+            serviceResponse.Data = _mapper.Map<GetPizzaResponseDto>(dbPizza);
             return serviceResponse;
         }
         public async Task<ServiceResponse<List<GetPizzaResponseDto>>> AddPizza(AddPizzaRequestDto newPizza)
