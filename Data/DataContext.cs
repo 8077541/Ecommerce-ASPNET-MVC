@@ -15,5 +15,6 @@ namespace ecom.Data
         }
 
         public DbSet<Pizza> Pizzas => Set<Pizza>();
+        public DbSet<Order> Orders => Set<Order>();
     }
 }

@@ -12,6 +12,7 @@ namespace ecom
         {
             CreateMap<Pizza, GetPizzaResponseDto>();
             CreateMap<AddPizzaRequestDto, Pizza>();
+            CreateMap<Order, GetOrderResponseDto>();
         }
     }
 }
