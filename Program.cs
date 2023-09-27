@@ -1,5 +1,6 @@
 global using ecom.Models;
 global using ecom.Services.PizzaService;
+global using ecom.Services.OrderService;
 global using ecom.Dtos.PizzaDto;
 global using ecom.Dtos.OrderDto;
 global using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<IPizzaService, PizzaService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 var app = builder.Build();
 

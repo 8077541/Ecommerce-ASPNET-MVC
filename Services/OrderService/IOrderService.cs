@@ -7,6 +7,7 @@ namespace ecom.Services.OrderService
 {
     public interface IOrderService
     {
-
+        Task<ServiceResponse<List<GetOrderResponseDto>>> GetAllOrders();
+        Task<ServiceResponse<GetOrderResponseDto>> GetOrderById(int id);
     }
 }

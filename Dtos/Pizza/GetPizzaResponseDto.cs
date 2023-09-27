@@ -8,7 +8,7 @@ namespace ecom.Dtos.PizzaDto
     public class GetPizzaResponseDto
     {
 
-        public int Id { get; set; }
+        public int PizzaId { get; set; }
         public string Name { get; set; } = "Margharita";
         public int BasePrice { get; set; }
         public string Descirption { get; set; } = "Plain and basic.";

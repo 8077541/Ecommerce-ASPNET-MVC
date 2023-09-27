@@ -9,11 +9,6 @@ namespace ecom.Services.PizzaService
 {
     public class PizzaService : IPizzaService
     {
-        private static List<Pizza> pizzas = new List<Pizza>{
-            new Pizza(),
-            new Pizza{Id = 1 , Name = "Cappriciosa"}
-        };
-
 
         private readonly IMapper _mapper;
         private readonly DataContext _context;
@@ -33,17 +28,20 @@ namespace ecom.Services.PizzaService
         public async Task<ServiceResponse<GetPizzaResponseDto>> GetPizzaById(int id)
         {
             var serviceResponse = new ServiceResponse<GetPizzaResponseDto>();
-            var dbPizza = await _context.Pizzas.FirstOrDefaultAsync(p => p.Id == id);
+            var dbPizza = await _context.Pizzas.FirstOrDefaultAsync(p => p.PizzaId == id);
             serviceResponse.Data = _mapper.Map<GetPizzaResponseDto>(dbPizza);
+            Console.WriteLine(serviceResponse.Data.Ingredients[0]);
             return serviceResponse;
         }
         public async Task<ServiceResponse<List<GetPizzaResponseDto>>> AddPizza(AddPizzaRequestDto newPizza)
         {
             var serviceResponse = new ServiceResponse<List<GetPizzaResponseDto>>();
             var pizza = _mapper.Map<Pizza>(newPizza);
-            pizza.Id = pizzas.Max(p => p.Id) + 1;
-            pizzas.Add(pizza);
-            serviceResponse.Data = pizzas.Select(p => _mapper.Map<GetPizzaResponseDto>(p)).ToList();
+
+
+            _context.Pizzas.Add(pizza);
+            await _context.SaveChangesAsync();
+            serviceResponse.Data = GetAllPizzas().Result.Data;
             return serviceResponse;
 
         }
@@ -54,7 +52,7 @@ namespace ecom.Services.PizzaService
             try
             {
 
-                var pizza = pizzas.FirstOrDefault(p => p.Id == updatedPizza.Id) ?? throw new Exception("Pizza not found!");
+                var pizza = await _context.Pizzas.FirstOrDefaultAsync(p => p.PizzaId == updatedPizza.PizzaId);
 
                 pizza.Name = updatedPizza.Name;
                 pizza.BasePrice = updatedPizza.BasePrice;
@@ -63,6 +61,7 @@ namespace ecom.Services.PizzaService
                 pizza.Size = updatedPizza.Size;
 
                 serviceResponse.Data = _mapper.Map<GetPizzaResponseDto>(pizza);
+                _context.SaveChanges();
             }
             catch (Exception e)
             {
@@ -76,21 +75,15 @@ namespace ecom.Services.PizzaService
         public async Task<ServiceResponse<List<GetPizzaResponseDto>>> DeletePizza(int id)
         {
             var serviceResponse = new ServiceResponse<List<GetPizzaResponseDto>>();
-            try
+
+            var pizza = await _context.Pizzas.FirstOrDefaultAsync(p => p.PizzaId == id);
+
+            if (pizza != null)
             {
-
-                var pizza = pizzas.FirstOrDefault(p => p.Id == id) ?? throw new Exception("Pizza not found!");
-
-                pizzas.Remove(pizza);
-
-                serviceResponse.Data = pizzas.Select(c => _mapper.Map<GetPizzaResponseDto>(c)).ToList();
+                _context.Pizzas.Remove(pizza);
+                _context.SaveChanges();
             }
-            catch (Exception e)
-            {
-                serviceResponse.Success = false;
-                serviceResponse.Message = e.Message;
-
-            }
+            serviceResponse.Data = GetAllPizzas().Result.Data;
             return serviceResponse;
         }
     }
