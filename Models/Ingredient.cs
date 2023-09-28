@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ecom.Models
@@ -10,7 +11,8 @@ namespace ecom.Models
         public int IngredientId { get; set; }
         public string Name { get; set; } = null!;
 
-        public List<Pizza> Pizzas { get; set; } = null!;
-
+        public int PizzaId { get; set; }
+        [JsonIgnore]
+        public Pizza Pizza { get; set; }
     }
 }

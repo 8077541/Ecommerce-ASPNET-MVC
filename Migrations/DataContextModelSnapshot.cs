@@ -24,24 +24,24 @@ namespace ecom.Migrations
 
             modelBuilder.Entity("ecom.Models.Ingredient", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("IngredientId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IngredientId"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PizzaId")
+                    b.Property<int>("PizzaId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("IngredientId");
 
                     b.HasIndex("PizzaId");
 
-                    b.ToTable("Ingredient");
+                    b.ToTable("Ingredients");
                 });
 
             modelBuilder.Entity("ecom.Models.Order", b =>
@@ -119,9 +119,13 @@ namespace ecom.Migrations
 
             modelBuilder.Entity("ecom.Models.Ingredient", b =>
                 {
-                    b.HasOne("ecom.Models.Pizza", null)
+                    b.HasOne("ecom.Models.Pizza", "Pizza")
                         .WithMany("Ingredients")
-                        .HasForeignKey("PizzaId");
+                        .HasForeignKey("PizzaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pizza");
                 });
 
             modelBuilder.Entity("ecom.Models.Pizza", b =>

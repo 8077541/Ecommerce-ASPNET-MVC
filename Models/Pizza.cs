@@ -8,7 +8,7 @@ namespace ecom.Models
 {
     public class Pizza
     {
-        public int PizzaId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; } = "Margharita";
         public int BasePrice { get; set; }
         public string Descirption { get; set; } = "Plain and basic.";

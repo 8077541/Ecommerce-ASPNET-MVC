@@ -12,8 +12,8 @@ using ecom.Data;
 namespace ecom.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230927201747_Igch")]
-    partial class Igch
+    [Migration("20230928005318_INIT")]
+    partial class INIT
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,28 @@ namespace ecom.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("ecom.Models.Ingredient", b =>
+                {
+                    b.Property<int>("IngredientId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IngredientId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PizzaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("IngredientId");
+
+                    b.HasIndex("PizzaId");
+
+                    b.ToTable("Ingredients");
+                });
 
             modelBuilder.Entity("ecom.Models.Order", b =>
                 {
@@ -98,6 +120,17 @@ namespace ecom.Migrations
                     b.ToTable("Pizzas");
                 });
 
+            modelBuilder.Entity("ecom.Models.Ingredient", b =>
+                {
+                    b.HasOne("ecom.Models.Pizza", "Pizza")
+                        .WithMany("Ingredients")
+                        .HasForeignKey("PizzaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pizza");
+                });
+
             modelBuilder.Entity("ecom.Models.Pizza", b =>
                 {
                     b.HasOne("ecom.Models.Order", null)
@@ -108,6 +141,11 @@ namespace ecom.Migrations
             modelBuilder.Entity("ecom.Models.Order", b =>
                 {
                     b.Navigation("OrderedPizzas");
+                });
+
+            modelBuilder.Entity("ecom.Models.Pizza", b =>
+                {
+                    b.Navigation("Ingredients");
                 });
 #pragma warning restore 612, 618
         }

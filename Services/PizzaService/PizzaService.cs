@@ -21,16 +21,16 @@ namespace ecom.Services.PizzaService
         public async Task<ServiceResponse<List<GetPizzaResponseDto>>> GetAllPizzas()
         {
             var serviceResponse = new ServiceResponse<List<GetPizzaResponseDto>>();
-            var dbPizzas = await _context.Pizzas.ToListAsync();
+            var dbPizzas = await _context.Pizzas.Include(p => p.Ingredients).ToListAsync();
             serviceResponse.Data = dbPizzas.Select(p => _mapper.Map<GetPizzaResponseDto>(p)).ToList();
             return serviceResponse;
         }
         public async Task<ServiceResponse<GetPizzaResponseDto>> GetPizzaById(int id)
         {
             var serviceResponse = new ServiceResponse<GetPizzaResponseDto>();
-            var dbPizza = await _context.Pizzas.FirstOrDefaultAsync(p => p.PizzaId == id);
+            var dbPizza = await _context.Pizzas.Include(p => p.Ingredients).FirstOrDefaultAsync(p => p.Id == id);
             serviceResponse.Data = _mapper.Map<GetPizzaResponseDto>(dbPizza);
-            Console.WriteLine(serviceResponse.Data.Ingredients[0]);
+
             return serviceResponse;
         }
         public async Task<ServiceResponse<List<GetPizzaResponseDto>>> AddPizza(AddPizzaRequestDto newPizza)
@@ -38,7 +38,8 @@ namespace ecom.Services.PizzaService
             var serviceResponse = new ServiceResponse<List<GetPizzaResponseDto>>();
             var pizza = _mapper.Map<Pizza>(newPizza);
 
-
+            var ingredients = newPizza.Ingredients.Select(i => _mapper.Map<Ingredient>(i)).ToList();
+            pizza.Ingredients = ingredients;
             _context.Pizzas.Add(pizza);
             await _context.SaveChangesAsync();
             serviceResponse.Data = GetAllPizzas().Result.Data;
@@ -52,7 +53,7 @@ namespace ecom.Services.PizzaService
             try
             {
 
-                var pizza = await _context.Pizzas.FirstOrDefaultAsync(p => p.PizzaId == updatedPizza.PizzaId);
+                var pizza = await _context.Pizzas.FirstOrDefaultAsync(p => p.Id == updatedPizza.Id);
 
                 pizza.Name = updatedPizza.Name;
                 pizza.BasePrice = updatedPizza.BasePrice;
@@ -76,7 +77,7 @@ namespace ecom.Services.PizzaService
         {
             var serviceResponse = new ServiceResponse<List<GetPizzaResponseDto>>();
 
-            var pizza = await _context.Pizzas.FirstOrDefaultAsync(p => p.PizzaId == id);
+            var pizza = await _context.Pizzas.FirstOrDefaultAsync(p => p.Id == id);
 
             if (pizza != null)
             {

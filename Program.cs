@@ -3,6 +3,7 @@ global using ecom.Services.PizzaService;
 global using ecom.Services.OrderService;
 global using ecom.Dtos.PizzaDto;
 global using ecom.Dtos.OrderDto;
+global using ecom.Dtos.IngredientDto;
 global using Microsoft.EntityFrameworkCore;
 using ecom.Data;
 var builder = WebApplication.CreateBuilder(args);
