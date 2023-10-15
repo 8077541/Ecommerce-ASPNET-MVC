@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6jpjMivwR/MDgSoIpnCtoTJ6pt1QrpV/tDFSNYMe5nEhtnm/IftkfoGBMsXMTkW4efz5p1a1c8e0eb6k1HBFSQ==",
+  "dgSpecHash": "kwZI4/sCbJMmfHmLPwU4vsTwk8uGddVhMXBjAQQpxRcAKTySgsDFoMfvDpwWM0SyZ9tyyvRXFMqdnXLJ3ZWYkQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\amogus\\Desktop\\ecom\\ecom.csproj",
+  "projectFilePath": "C:\\Users\\amogus\\Desktop\\ecom2\\ecom\\ecom.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\amogus\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\amogus\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
