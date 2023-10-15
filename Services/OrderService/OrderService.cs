@@ -33,5 +33,24 @@ namespace ecom.Services.OrderService
             serviceResponse.Data = _mapper.Map<GetOrderResponseDto>(dbOrder);
             return serviceResponse;
         }
+        public async Task<ServiceResponse<List<GetOrderResponseDto>>> AddOrder(AddOrderRequestDto newOrder)
+        {
+            var serviceResponse = new ServiceResponse<List<GetOrderResponseDto>>();
+
+            var order = _mapper.Map<Order>(newOrder);
+
+            var pizzas = newOrder.OrderedPizzas.Select(p => _mapper.Map<Pizza>(p)).ToList();
+
+            order.OrderedPizzas = pizzas;
+
+            _context.Orders.Add(order);
+
+            await _context.SaveChangesAsync();
+
+            serviceResponse.Data = GetAllOrders().Result.Data;
+
+            return serviceResponse;
+
+        }
     }
 }

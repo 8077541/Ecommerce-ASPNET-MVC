@@ -12,7 +12,7 @@ namespace ecom.Dtos.PizzaDto
         public string Name { get; set; } = "Margharita";
         public int BasePrice { get; set; }
         public string Descirption { get; set; } = "Plain and basic.";
-        public List<AddIngredientRequestDto> Ingredients { get; set; }
+        public List<GetIngredientResponseDto> Ingredients { get; set; }
         public PizzaSize Size { get; set; } = PizzaSize.Small;
     }
 }

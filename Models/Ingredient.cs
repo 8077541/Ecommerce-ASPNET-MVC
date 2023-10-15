@@ -12,7 +12,7 @@ namespace ecom.Models
         public string Name { get; set; } = null!;
 
         public int PizzaId { get; set; }
-        [JsonIgnore]
-        public Pizza Pizza { get; set; }
+
+
     }
 }

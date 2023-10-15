@@ -34,5 +34,11 @@ namespace ecom.Controllers
             }
             return Ok(response);
         }
+        [HttpPost]
+        public async Task<ActionResult<ServiceResponse<List<GetOrderResponseDto>>>> AddOrder(AddOrderRequestDto newOrder)
+        {
+            var response = await _orderService.AddOrder(newOrder);
+            return Ok(response);
+        }
     }
 }
