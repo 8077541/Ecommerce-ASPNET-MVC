@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using ecom.Data;
 
+
 namespace ecom.Services.OrderService
 {
     public class OrderService : IOrderService
@@ -51,6 +52,38 @@ namespace ecom.Services.OrderService
 
             return serviceResponse;
 
+        }
+        public async Task<ServiceResponse<List<GetOrderResponseDto>>> UpdateOrder(UpdateOrderRequestDto updatedOrder)
+        {
+            var serviceResponse = new ServiceResponse<List<GetOrderResponseDto>>();
+
+            var order = _mapper.Map<Order>(updatedOrder);
+
+            var pizzas = updatedOrder.OrderedPizzas.Select(p => _mapper.Map<Pizza>(p)).ToList();
+
+            order.OrderedPizzas = pizzas;
+
+            _context.Orders.Update(order);
+
+            await _context.SaveChangesAsync();
+
+            serviceResponse.Data = GetAllOrders().Result.Data;
+
+            return serviceResponse;
+
+
+        }
+        public async Task<ServiceResponse<List<GetOrderResponseDto>>> DeleteOrder(int id)
+        {
+            var serviceResponse = new ServiceResponse<List<GetOrderResponseDto>>();
+            var dbOrder = await _context.Orders.FirstOrDefaultAsync(p => p.Id == id);
+            if (dbOrder != null)
+            {
+                _context.Orders.Remove(dbOrder);
+                _context.SaveChanges();
+            }
+            serviceResponse.Data = GetAllOrders().Result.Data;
+            return serviceResponse;
         }
     }
 }

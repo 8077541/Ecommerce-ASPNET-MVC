@@ -15,6 +15,9 @@ namespace ecom
             CreateMap<AddPizzaRequestDto, Pizza>();
             CreateMap<Order, GetOrderResponseDto>();
             CreateMap<AddOrderRequestDto, Order>();
+            CreateMap<UpdatePizzaRequestDto, Order>();
+            CreateMap<UpdateOrderRequestDto, Order>();
+            
             CreateMap<Ingredient, GetIngredientResponseDto>();
             CreateMap<AddIngredientRequestDto, Ingredient>();
 

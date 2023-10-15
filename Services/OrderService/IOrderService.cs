@@ -10,5 +10,8 @@ namespace ecom.Services.OrderService
         Task<ServiceResponse<List<GetOrderResponseDto>>> GetAllOrders();
         Task<ServiceResponse<GetOrderResponseDto>> GetOrderById(int id);
         Task<ServiceResponse<List<GetOrderResponseDto>>> AddOrder(AddOrderRequestDto newOrder);
+        Task<ServiceResponse<List<GetOrderResponseDto>>> UpdateOrder(UpdateOrderRequestDto updatedOrder);
+        Task<ServiceResponse<List<GetOrderResponseDto>>> DeleteOrder(int id);
+
     }
 }
