@@ -7,6 +7,7 @@ namespace ecom.Dtos.OrderDto
 {
     public class UpdateOrderRequestDto
     {
+        public int Id { get; set; }
         public string City { get; set; } = "City";
         public string Province { get; set; } = "Province";
         public string Street { get; set; } = "Street";

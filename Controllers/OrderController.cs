@@ -40,5 +40,16 @@ namespace ecom.Controllers
             var response = await _orderService.AddOrder(newOrder);
             return Ok(response);
         }
+        [HttpPut]
+        public async Task<ActionResult<ServiceResponse<List<GetOrderResponseDto>>>> UpdateOrder(UpdateOrderRequestDto updatedOrder){
+            var response = await _orderService.UpdateOrder(updatedOrder);
+            return Ok(response);
+        
+        }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<ServiceResponse<List<GetOrderResponseDto>>>> DeleteOrder(int id){
+            var response = await _orderService.DeleteOrder(id);
+            return response;
+        }
     }
 }
