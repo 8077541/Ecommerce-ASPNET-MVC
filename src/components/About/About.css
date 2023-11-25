@@ -1,0 +1,29 @@
+.aboutSection {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  max-width: 80%;
+  /* background-color: rgba(0, 0, 0, 0.1); */
+  display: inline-flex;
+
+  color: rgb(255, 255, 255);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.appName {
+  font-size: 48px;
+  padding-right: 2%;
+  text-align: center;
+}
+.aboutText {
+  font-size: 32px;
+}
+.aboutSection a {
+  font-size: 32px;
+  color: brown;
+}
+.aboutSection a:hover {
+  color: rgb(100, 190, 82);
+}

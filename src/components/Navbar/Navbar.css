@@ -1,0 +1,76 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:500");
+.NavBar {
+  background: repeating-linear-gradient(
+    45deg,
+    #ce3e3e,
+    #be3a3a 10px,
+    #a32f2f 10px,
+    #8d2727 20px
+  );
+}
+li,
+a,
+button {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: aliceblue;
+  text-decoration: none;
+}
+header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px 10%;
+}
+.Logo {
+  cursor: pointer;
+  margin-right: auto;
+}
+.NavLinks {
+  list-style: none;
+}
+.NavLinks li {
+  display: inline-block;
+  padding: 0px 20px;
+}
+.NavLinks li a {
+  transition: all 0.3 ease 0s;
+}
+.NavLinks li a:hover {
+  color: rgb(169, 240, 167);
+}
+.buttonStyle {
+  margin-left: 13px;
+  padding: 9px 25px;
+  background-color: rgb(100, 190, 82);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+button:hover {
+  background-color: rgba(100, 190, 82, 0.8);
+}
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.imgbox {
+  display: grid;
+  height: 100%;
+  position: absolute;
+  z-index: -1;
+}
+.center-fit {
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
+  filter: blur(2px);
+  filter: brightness(65%);
+  background-color: #a79d8e;
+  z-index: 1;
+}
