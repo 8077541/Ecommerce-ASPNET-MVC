@@ -5,9 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Web.Http.Cors;
 
 namespace ecom.Controllers
 {
+    [EnableCors(origins: "http://mywebclient.azurewebsites.net", headers: "*", methods: "*")]
     [ApiController]
     [Route("api/[controller]")]
     public class OrderController : ControllerBase
@@ -41,13 +43,15 @@ namespace ecom.Controllers
             return Ok(response);
         }
         [HttpPut]
-        public async Task<ActionResult<ServiceResponse<List<GetOrderResponseDto>>>> UpdateOrder(UpdateOrderRequestDto updatedOrder){
+        public async Task<ActionResult<ServiceResponse<List<GetOrderResponseDto>>>> UpdateOrder(UpdateOrderRequestDto updatedOrder)
+        {
             var response = await _orderService.UpdateOrder(updatedOrder);
             return Ok(response);
-        
+
         }
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ServiceResponse<List<GetOrderResponseDto>>>> DeleteOrder(int id){
+        public async Task<ActionResult<ServiceResponse<List<GetOrderResponseDto>>>> DeleteOrder(int id)
+        {
             var response = await _orderService.DeleteOrder(id);
             return response;
         }

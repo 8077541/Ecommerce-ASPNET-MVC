@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using System.Web.Http.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ecom.Controllers
 {
+    [EnableCors(origins: "http://localhost.com", headers: "*", methods: "*")]
     [ApiController]
     [Route("api/[controller]")]
     public class PizzaController : ControllerBase

@@ -17,6 +17,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<IPizzaService, PizzaService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddCors(p => p.AddPolicy("corsPolicy", build =>
+{
+    build.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
+}));
+
 
 var app = builder.Build();
 
@@ -26,6 +31,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("corsPolicy");
 
 app.UseHttpsRedirection();
 
