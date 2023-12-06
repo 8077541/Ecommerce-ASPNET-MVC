@@ -3,12 +3,42 @@ import axios from "axios";
 import "./NewOrder.css";
 
 const NewOrder = () => {
+  const [formFloor, setFormFloor] = useState(0);
+  const [formApartament, setFormApartament] = useState(0);
+  const [formStreet, setFormStreet] = useState("");
+  const [formProvince, setFormProvince] = useState("");
+  const [formCity, setFormCity] = useState("");
   const [value, setValue] = useState();
   const [menuId, setId] = useState(0);
   const [loading, setLoading] = useState(true);
   const [menu, setMenu] = useState();
   const [basket, setBasket] = useState([]);
+  const [price, setPrice] = useState([]);
 
+  async function handleSubmit() {
+    const json = JSON.stringify({
+      data: {
+        city: formCity,
+        province: formProvince,
+        street: formStreet,
+        apartament: formApartament,
+        floor: formFloor,
+        orderedPizzas: [...basket],
+        paid: true,
+        price: price,
+      },
+    });
+    await axios
+      .post("http://localhost:5037/api/Order", json, {
+        headers: {
+          // Overwrite Axios's automatically set Content-Type
+          "Content-Type": "application/json",
+        },
+      })
+      .then(function (response) {
+        console.log(response);
+      });
+  }
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
@@ -17,6 +47,7 @@ const NewOrder = () => {
   };
   const showBasket = () => {
     console.log(basket);
+    console.log(formCity);
   };
   const addToBasket = (item) => {
     let newItem = JSON.parse(JSON.stringify(item));
@@ -132,25 +163,72 @@ const NewOrder = () => {
         </div>
 
         <div className="orderSumamry">
-          <form className="addresForm">
+          <form className="addresForm" onSubmit={handleSubmit}>
             {" "}
             <label for="fname">City</label>
-            <input type="text" id="fname" name="fname" />
+            <input
+              type="text"
+              id="fname"
+              name="fname"
+              onChange={(e) => {
+                setFormCity(e.target.value);
+              }}
+            />
             <br></br>
             <label for="lname">Province</label>
-            <input type="text" id="lname" name="lname" />
+            <input
+              type="text"
+              id="lname"
+              name="lname"
+              onChange={(e) => {
+                setFormProvince(e.target.value);
+              }}
+            />
             <br></br>
             <label for="lname">Street</label>
-            <input type="text" id="lname" name="lname" />
+            <input
+              type="text"
+              id="lname"
+              name="lname"
+              onChange={(e) => {
+                setFormStreet(e.target.value);
+              }}
+            />
             <br></br>
             <label for="lname">Apartament</label>
-            <input type="text" id="lname" name="lname" />
+            <input
+              type="text"
+              id="lname"
+              name="lname"
+              onChange={(e) => {
+                setFormApartament(e.target.value);
+              }}
+            />
             <br></br>
             <label for="lname">Floor</label>
-            <input type="text" id="lname" name="lname" />
+            <input
+              type="text"
+              id="lname"
+              name="lname"
+              onChange={(e) => {
+                setFormFloor(e.target.value);
+              }}
+            />
             <input className="orderButton" type="submit" value="Order"></input>
           </form>
-          <h1 className="totalPrice" onClick={() => showBasket()}>
+          <h1
+            className="totalPrice"
+            onChange={() => {
+              setPrice(
+                basket.reduce(
+                  (a, b) =>
+                    Number(b.size) ? a + b.basePrice * b.size : a + b.basePrice,
+                  0
+                )
+              );
+            }}
+            onClick={() => showBasket()}
+          >
             Total:{" "}
             {basket.reduce(
               (a, b) =>
