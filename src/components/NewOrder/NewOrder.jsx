@@ -16,23 +16,29 @@ const NewOrder = () => {
   const [price, setPrice] = useState([]);
 
   async function handleSubmit() {
+    let priceInt = parseInt(price);
+    const mappedBasket = basket.forEach((x) => {
+      delete x.basePrice;
+      delete x.descirption;
+      delete x.ingredients;
+      delete x.name;
+    });
+    console.log(mappedBasket, basket);
     const json = JSON.stringify({
-      data: {
-        city: formCity,
-        province: formProvince,
-        street: formStreet,
-        apartament: formApartament,
-        floor: formFloor,
-        orderedPizzas: [...basket],
-        paid: true,
-        price: price,
-      },
+      city: formCity,
+      province: formProvince,
+      street: formStreet,
+      apartament: formApartament,
+      floor: formFloor,
+      orderedPizzas: [...basket],
+      paid: true,
+      price: 15,
     });
     await axios
       .post("http://localhost:5037/api/Order", json, {
         headers: {
-          // Overwrite Axios's automatically set Content-Type
           "Content-Type": "application/json",
+          Accept: "text/plain",
         },
       })
       .then(function (response) {
@@ -214,7 +220,12 @@ const NewOrder = () => {
                 setFormFloor(e.target.value);
               }}
             />
-            <input className="orderButton" type="submit" value="Order"></input>
+            <input
+              className="orderButton"
+              type=""
+              onClick={handleSubmit}
+              value="Order"
+            ></input>
           </form>
           <h1
             className="totalPrice"
