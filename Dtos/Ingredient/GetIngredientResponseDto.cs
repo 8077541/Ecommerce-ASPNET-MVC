@@ -7,6 +7,9 @@ namespace ecom.Dtos.IngredientDto
 {
     public class GetIngredientResponseDto
     {
-        public string Name { get; set; }
+        public int IngredientId { get; set; }
+        public string Name { get; set; } = null!;
+
+        public int PizzaId { get; set; }
     }
 }
