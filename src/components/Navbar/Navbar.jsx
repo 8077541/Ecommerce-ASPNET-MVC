@@ -31,7 +31,7 @@ const Navbar = () => {
         <Link className="cta" to="/newOrder">
           <button className="buttonStyle">Order</button>
         </Link>
-        <Link className="cta" to="/adm">
+        <Link className="cta" to="/Admin">
           <button className="buttonStyle">Admin Demo</button>
         </Link>
       </header>

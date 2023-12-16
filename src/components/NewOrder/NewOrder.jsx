@@ -13,10 +13,10 @@ const NewOrder = () => {
   const [loading, setLoading] = useState(true);
   const [menu, setMenu] = useState();
   const [basket, setBasket] = useState([]);
-  const [price, setPrice] = useState([]);
+  const [price, setPrice] = useState(0);
 
   async function handleSubmit() {
-    let priceInt = parseInt(price);
+    console.log(price, typeof price);
     const mappedBasket = basket.forEach((x) => {
       delete x.basePrice;
       delete x.descirption;
@@ -32,7 +32,7 @@ const NewOrder = () => {
       floor: formFloor,
       orderedPizzas: [...basket],
       paid: true,
-      price: 15,
+      price: price,
     });
     await axios
       .post("http://localhost:5037/api/Order", json, {
@@ -44,9 +44,18 @@ const NewOrder = () => {
       .then(function (response) {
         console.log(response);
       });
+    setPrice(0);
+    setBasket([]);
   }
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
+  }
+  function priceSetter(item) {
+    setPrice(
+      Number(item.size)
+        ? price + item.basePrice * item.size
+        : price + item.basePrice
+    );
   }
   const showItem = (item) => {
     console.log(item);
@@ -54,12 +63,19 @@ const NewOrder = () => {
   const showBasket = () => {
     console.log(basket);
     console.log(formCity);
+    console.log(price);
   };
   const addToBasket = (item) => {
     let newItem = JSON.parse(JSON.stringify(item));
     setBasket([...basket, newItem]);
+    priceSetter(item);
   };
   const removeFromBasket = (item) => {
+    setPrice(
+      Number(item.size)
+        ? price - item.basePrice * item.size
+        : price - item.basePrice
+    );
     const newBasket = basket.filter((i) => i !== item);
 
     setBasket(newBasket);
@@ -70,15 +86,6 @@ const NewOrder = () => {
     const load = async () => {
       setLoading(true);
 
-      // await axios
-      //   .get(`http://localhost:5037/api/Pizza/GetAll`)
-      //   .then((res) => {
-      //     setMenu(res.data.data);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
-      // console.log(menu);
       const response = await axios.get(
         `http://localhost:5037/api/Pizza/GetAll`
       );
@@ -174,6 +181,7 @@ const NewOrder = () => {
             <label for="fname">City</label>
             <input
               type="text"
+              pattern="[A-Za-z]{3}"
               id="fname"
               name="fname"
               onChange={(e) => {
@@ -227,26 +235,8 @@ const NewOrder = () => {
               value="Order"
             ></input>
           </form>
-          <h1
-            className="totalPrice"
-            onChange={() => {
-              setPrice(
-                basket.reduce(
-                  (a, b) =>
-                    Number(b.size) ? a + b.basePrice * b.size : a + b.basePrice,
-                  0
-                )
-              );
-            }}
-            onClick={() => showBasket()}
-          >
-            Total:{" "}
-            {basket.reduce(
-              (a, b) =>
-                Number(b.size) ? a + b.basePrice * b.size : a + b.basePrice,
-              0
-            )}{" "}
-            PLN
+          <h1 className="totalPrice" onClick={() => showBasket()}>
+            Total: {price} PLN
           </h1>
         </div>
       </div>

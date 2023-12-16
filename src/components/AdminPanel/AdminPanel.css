@@ -1,0 +1,11 @@
+body {
+  background-color: black;
+  color: white;
+}
+#admin-panel {
+  background-color: antiquewhite;
+  width: 95%;
+  height: 100vh;
+  margin-right: auto;
+  margin-left: auto;
+}

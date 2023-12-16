@@ -11,6 +11,7 @@ import Home from "./components/Home/Home.jsx";
 import About from "./components/About/About.jsx";
 import Contact from "./components/Contact/Contact.jsx";
 import NewOrder from "./components/NewOrder/NewOrder.jsx";
+import AdminPanel from "./components/AdminPanel/AdminPanel.jsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -49,6 +50,14 @@ root.render(
             <div>
               <Navbar></Navbar>
               <NewOrder></NewOrder>
+            </div>
+          }
+        ></Route>
+        <Route
+          path="/Admin"
+          element={
+            <div>
+              <AdminPanel></AdminPanel>
             </div>
           }
         ></Route>
