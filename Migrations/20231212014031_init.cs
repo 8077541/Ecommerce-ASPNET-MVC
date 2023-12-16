@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ecom.Migrations
 {
     /// <inheritdoc />
-    public partial class INIT : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -40,14 +40,28 @@ namespace ecom.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BasePrice = table.Column<int>(type: "int", nullable: false),
                     Descirption = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Size = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pizzas", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PizzaOrders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PizzaId = table.Column<int>(type: "int", nullable: false),
                     Size = table.Column<int>(type: "int", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pizzas", x => x.Id);
+                    table.PrimaryKey("PK_PizzaOrders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pizzas_Orders_OrderId",
+                        name: "FK_PizzaOrders_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id");
@@ -79,8 +93,8 @@ namespace ecom.Migrations
                 column: "PizzaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pizzas_OrderId",
-                table: "Pizzas",
+                name: "IX_PizzaOrders_OrderId",
+                table: "PizzaOrders",
                 column: "OrderId");
         }
 
@@ -89,6 +103,9 @@ namespace ecom.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Ingredients");
+
+            migrationBuilder.DropTable(
+                name: "PizzaOrders");
 
             migrationBuilder.DropTable(
                 name: "Pizzas");

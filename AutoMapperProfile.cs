@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using ecom.Dtos.Order;
 
 
 namespace ecom
@@ -17,9 +18,10 @@ namespace ecom
             CreateMap<AddOrderRequestDto, Order>();
             CreateMap<UpdatePizzaRequestDto, Order>();
             CreateMap<UpdateOrderRequestDto, Order>();
-            
             CreateMap<Ingredient, GetIngredientResponseDto>();
             CreateMap<AddIngredientRequestDto, Ingredient>();
+            CreateMap<AddPizzaOrderRequestDto, PizzaOrder>();
+            CreateMap<PizzaOrder, AddPizzaOrderRequestDto>();
 
         }
     }

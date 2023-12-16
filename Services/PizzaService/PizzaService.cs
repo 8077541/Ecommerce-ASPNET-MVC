@@ -28,7 +28,7 @@ namespace ecom.Services.PizzaService
         public async Task<ServiceResponse<GetPizzaResponseDto>> GetPizzaById(int id)
         {
             var serviceResponse = new ServiceResponse<GetPizzaResponseDto>();
-            var dbPizza = await _context.Pizzas.Include(p => p.Ingredients).FirstOrDefaultAsync(p => p.Id == id);
+            var dbPizza = await _context.Pizzas.AsNoTracking().Include(p => p.Ingredients).FirstOrDefaultAsync(p => p.Id == id);
             serviceResponse.Data = _mapper.Map<GetPizzaResponseDto>(dbPizza);
 
             return serviceResponse;

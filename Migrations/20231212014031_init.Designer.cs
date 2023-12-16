@@ -12,8 +12,8 @@ using ecom.Data;
 namespace ecom.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230929221322_ing")]
-    partial class ing
+    [Migration("20231212014031_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -107,7 +107,26 @@ namespace ecom.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Size")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Pizzas");
+                });
+
+            modelBuilder.Entity("ecom.Models.PizzaOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PizzaId")
                         .HasColumnType("int");
 
                     b.Property<int>("Size")
@@ -117,7 +136,7 @@ namespace ecom.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("Pizzas");
+                    b.ToTable("PizzaOrders");
                 });
 
             modelBuilder.Entity("ecom.Models.Ingredient", b =>
@@ -129,7 +148,7 @@ namespace ecom.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ecom.Models.Pizza", b =>
+            modelBuilder.Entity("ecom.Models.PizzaOrder", b =>
                 {
                     b.HasOne("ecom.Models.Order", null)
                         .WithMany("OrderedPizzas")

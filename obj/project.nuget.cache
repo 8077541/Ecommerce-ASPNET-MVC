@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "CwhV9S02xy2AkqHU3CfPLAxZRxTSyT0+4rBU0V0Fmix34JESpuL1hAaBqisvEt+oYx7+YO8KYTeF6pt8WR1eMA==",
+  "dgSpecHash": "JrjoHgtsuU1dWXbhxZMbA5CTfimwT3Bjs1Q+A22PX8MzWSYmn9qJzvQHouRFxe5baLeE6b4InJghw4IkeUs0bw==",
   "success": true,
   "projectFilePath": "C:\\Users\\amogus\\Desktop\\ecom2\\ecom\\ecom.csproj",
   "expectedPackageFiles": [
@@ -77,7 +77,11 @@
     "C:\\Users\\amogus\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
     "C:\\Users\\amogus\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512",
     "C:\\Users\\amogus\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
-    "C:\\Users\\amogus\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
+    "C:\\Users\\amogus\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512",
+    "C:\\Users\\amogus\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.14\\microsoft.netcore.app.ref.7.0.14.nupkg.sha512",
+    "C:\\Users\\amogus\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.14\\microsoft.windowsdesktop.app.ref.7.0.14.nupkg.sha512",
+    "C:\\Users\\amogus\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.14\\microsoft.aspnetcore.app.ref.7.0.14.nupkg.sha512",
+    "C:\\Users\\amogus\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\7.0.14\\microsoft.netcore.app.host.win-x64.7.0.14.nupkg.sha512"
   ],
   "logs": [
     {

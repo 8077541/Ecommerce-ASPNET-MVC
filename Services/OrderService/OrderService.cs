@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Http;
 using AutoMapper;
 using ecom.Data;
 
 
 namespace ecom.Services.OrderService
 {
+    [Authorize]
     public class OrderService : IOrderService
     {
 
@@ -40,9 +42,15 @@ namespace ecom.Services.OrderService
 
             var order = _mapper.Map<Order>(newOrder);
 
-            var pizzas = newOrder.OrderedPizzas.Select(p => _mapper.Map<Pizza>(p)).ToList();
+            var pizzas = newOrder.OrderedPizzas.Select(p => _mapper.Map<PizzaOrder>(p)).ToList();
 
             order.OrderedPizzas = pizzas;
+
+
+            foreach (PizzaOrder pizza in pizzas)
+            {
+                _context.PizzaOrders.Add(pizza);
+            }
 
             _context.Orders.Add(order);
 
@@ -61,7 +69,7 @@ namespace ecom.Services.OrderService
 
             var pizzas = updatedOrder.OrderedPizzas.Select(p => _mapper.Map<Pizza>(p)).ToList();
 
-            order.OrderedPizzas = pizzas;
+            // order.OrderedPizzas = pizzas;
 
             _context.Orders.Update(order);
 
@@ -73,7 +81,7 @@ namespace ecom.Services.OrderService
 
 
         }
-    
+
         public async Task<ServiceResponse<List<GetOrderResponseDto>>> DeleteOrder(int id)
         {
             var serviceResponse = new ServiceResponse<List<GetOrderResponseDto>>();

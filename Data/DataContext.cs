@@ -13,10 +13,15 @@ namespace ecom.Data
 
 
         }
-
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=Pizzeria;Trusted_Connection=true;TrustServerCertificate=true;");
+        }
         public DbSet<Pizza> Pizzas => Set<Pizza>();
         public DbSet<Order> Orders => Set<Order>();
         public DbSet<Ingredient> Ingredients => Set<Ingredient>();
+        public DbSet<PizzaOrder> PizzaOrders => Set<PizzaOrder>();
 
     }
 }
